@@ -6,9 +6,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./bin/server",
-    "dev": "nodemon ./bin/server"
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +19,9 @@
     "reto6": "file:"
   },
   "devDependencies": {
-    "nodemon": "^3.1.4"
+    "@types/jest": "^29.5.12",
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.4",
+    "supertest": "^7.0.0"
   }
 }
