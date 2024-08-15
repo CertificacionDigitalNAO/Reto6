@@ -6,7 +6,9 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "node ./bin/server.js",
+    "dev": "nodemon ./bin/server.js"
   },
   "keywords": [],
   "author": "",
