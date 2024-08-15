@@ -103,3 +103,33 @@ exports.updateRestaurant = async (req, res) => {
       .json({ message: "Error al actualizar el restaurante", error });
   }
 };
+
+/**
+ * Eliminar un restaurante (DELETE).
+ * @async
+ * @function deleteRestaurant
+ * @param {Object} req - Objeto de solicitud de Express.
+ * @param {Object} req.params - Objeto que contiene los parámetros de la ruta.
+ * @param {string} req.params.id - ID del restaurante a eliminar.
+ * @param {Object} res - Objeto de respuesta de Express.
+ * @returns {Promise<void>} - Devuelve una promesa que resuelve en una respuesta JSON con el restaurante eliminado o un mensaje de error.
+ * @throws {Error} - Devuelve un mensaje de error en caso de fallo.
+ */
+exports.deleteRestaurant = async (req, res) => {
+  try {
+    const restaurantId = req.params.id;
+
+    // Encuentra el restaurante por ID y elimina
+    const deletedRestaurant = await Restaurant.findByIdAndDelete(restaurantId);
+
+    if (!deletedRestaurant) {
+      return res.status(404).json({ message: "Restaurante no encontrado" });
+    }
+
+    res.status(200).json(deletedRestaurant);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error al eliminar el restaurante", error });
+  }
+};

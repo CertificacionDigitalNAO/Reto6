@@ -28,4 +28,12 @@ router.post('/', restaurantController.createRestaurant);
  */
 router.put('/:id', restaurantController.updateRestaurant);
 
+/**
+ * @route DELETE /:id
+ * @description Eliminar un restaurante por ID
+ * @access Public
+ * @param {string} id - El ID del restaurante a eliminar
+ */
+router.delete('/:id', restaurantController.deleteRestaurant);
+
 module.exports = router;
