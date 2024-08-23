@@ -70,6 +70,10 @@ const RestaurantSchema = new mongoose.Schema({
  * Modelo de la colección de restaurantes.
  * @type {mongoose.Model<Restaurant>}
  */
-const Restaurant = mongoose.model("Restaurant", RestaurantSchema, 'restaurants');
+const Restaurant = mongoose.model(
+  "Restaurant",
+  RestaurantSchema,
+  "restaurants"
+);
 
 module.exports = Restaurant;

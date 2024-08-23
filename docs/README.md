@@ -8,7 +8,12 @@ Contiene el **backup** de la base de datos, colecciones e índices en el directo
 
 ## Ciclo ID 2
 Este ciclo se centra en el desarrollo de una CRUD con API REST para manipular la información de los restaurantes. Además, se agregaron dos `enpoint` para agregar comentarios y calificar a los restaurantes. Los `endpoint` son los siguientes:
+
 - `GET /api/restaurants`: Recupera la información de todos los restaurantes.
 - `POST /api/restaurants`: Crea un nuevo restaurante.
-- `PUT /api/trips/idRestaurant`: Actualiza la información de un restaurante a través de su ID.
-- `DELETE /api/restaurants/idRestaurant`: Elimina un restaurante a través de su ID.
+- `PUT /api/restaurants/restaurant_id`: Actualiza la información de un restaurante a través de su ID.
+- `DELETE /api/restaurants/restaurant_id`: Elimina un restaurante a través de su ID.
+
+### Endpoints para Comentarios
+- `GET /api/restaurants/comments`: Obtiene todos los comentarios de los restaurantes. 
+- 

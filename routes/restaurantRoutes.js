@@ -2,23 +2,25 @@
  * @fileoverview Definición de las rutas de la API REST. Se especifican los endpoints y se conectan con los controladores correspondientes.
  */
 
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const restaurantController = require('../controllers/restaurantController');
+const restaurantController = require("../controllers/restaurantController");
+
+/* Ciclo ID 2 - CRUD para restaurantes */
 
 /**
  * @route GET /
  * @description Obtener todos los restaurantes
  * @access Public
  */
-router.get('/', restaurantController.getAllRestaurants);
+router.get("/", restaurantController.getAllRestaurants);
 
 /**
  * @route POST /
  * @description Crear un nuevo restaurante
  * @access Public
  */
-router.post('/', restaurantController.createRestaurant);
+router.post("/", restaurantController.createRestaurant);
 
 /**
  * @route PUT /:id
@@ -26,7 +28,7 @@ router.post('/', restaurantController.createRestaurant);
  * @access Public
  * @param {string} id - El ID del restaurante a actualizar
  */
-router.put('/:id', restaurantController.updateRestaurant);
+router.put("/:id", restaurantController.updateRestaurant);
 
 /**
  * @route DELETE /:id
@@ -34,6 +36,16 @@ router.put('/:id', restaurantController.updateRestaurant);
  * @access Public
  * @param {string} id - El ID del restaurante a eliminar
  */
-router.delete('/:id', restaurantController.deleteRestaurant);
+router.delete("/:id", restaurantController.deleteRestaurant);
+
+/* Endpoint para Comentarios de Restaurantes */
+
+/**
+ * @route GET /:id/comments
+ * @description Obtener todos los comentarios de un restaurante por ID
+ * @access Public
+ * @param {string} id - El ID del restaurante
+ */
+router.get('/:id/comments', restaurantController.getAllCommentsById);
 
 module.exports = router;

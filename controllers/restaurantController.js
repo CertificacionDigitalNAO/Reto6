@@ -66,7 +66,7 @@ exports.createRestaurant = async (req, res) => {
 };
 
 /**
- * Actualizar un restaurante (PUT).
+ * Actualizar un Restaurante (PUT).
  * @async
  * @function updateRestaurant
  * @param {Object} req - Objeto de solicitud de Express.
@@ -105,7 +105,7 @@ exports.updateRestaurant = async (req, res) => {
 };
 
 /**
- * Eliminar un restaurante (DELETE).
+ * Eliminar un Restaurante (DELETE).
  * @async
  * @function deleteRestaurant
  * @param {Object} req - Objeto de solicitud de Express.
@@ -133,3 +133,35 @@ exports.deleteRestaurant = async (req, res) => {
       .json({ message: "Error al eliminar el restaurante", error });
   }
 };
+
+/* Operaciones CRUD para Comentarios de Restaurantes */
+
+/**
+ * Obtener todos los Comentarios de un Restaurante por ID (GET).
+ * @async
+ * @function getAllCommentsById
+ * @param {Object} req - Objeto de solicitud de Express.
+ * @param {Object} req.params - Objeto que contiene los parámetros de la ruta.
+ * @param {string} req.params.id - El ID del restaurante.
+ * @param {Object} res - Objeto de respuesta de Express.
+ * @returns {Promise<void>} - Devuelve una promesa que resuelve en una respuesta JSON con los comentarios del restaurante o un mensaje de error.
+ * @throws {Error} - Devuelve un mensaje de error en caso de fallo.
+ */
+exports.getAllCommentsById = async (req, res) => {
+  try {
+    const restaurantId = req.params.id;
+    const restaurant = await Restaurant.findById(restaurantId).select(
+      "comments"
+    );
+
+    if (!restaurant) {
+      return res.status(404).json({ message: "Restaurante no encontrado" });
+    }
+
+    res.status(200).json(restaurant.comments);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+
