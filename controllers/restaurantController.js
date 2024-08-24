@@ -173,6 +173,8 @@ exports.getAllCommentsById = async (req, res) => {
  * @param {string} req.params.id - El ID del restaurante.
  * @param {string} req.params.commentId - El ID del comentario.
  * @param {Object} req.body - Objeto que contiene los datos del comentario actualizado.
+ * @param {string} req.body.comment - El contenido del comentario actualizado.
+ * @param {Date} req.body.date - La fecha del comentario actualizado.
  * @param {Object} res - Objeto de respuesta de Express.
  * @returns {Promise<void>} - Devuelve una promesa que resuelve en una respuesta JSON con el comentario actualizado o un mensaje de error.
  * @throws {Error} - Devuelve un mensaje de error en caso de fallo.
@@ -234,6 +236,8 @@ exports.updateCommentById = async (req, res) => {
  * @param {Object} req.params - Objeto que contiene los parámetros de la ruta.
  * @param {string} req.params.id - El ID del restaurante.
  * @param {Object} req.body - Objeto que contiene los datos del comentario.
+ * @param {string} req.body.comment - El contenido del comentario.
+ * @param {Date} req.body.date - La fecha del comentario.
  * @param {Object} res - Objeto de respuesta de Express.
  * @returns {Promise<void>} - Devuelve una promesa que resuelve en una respuesta JSON con el comentario agregado o un mensaje de error.
  * @throws {Error} - Devuelve un mensaje de error en caso de fallo.

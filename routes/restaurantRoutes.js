@@ -46,15 +46,34 @@ router.delete("/:id", restaurantController.deleteRestaurant);
  * @access Public
  * @param {string} id - El ID del restaurante
  */
-router.get('/:id/comments', restaurantController.getAllCommentsById);
+router.get("/:id/comments", restaurantController.getAllCommentsById);
 
-// Actualizar un Comentario por ID PUT /:id/comments/:commentId
-router.put('/:id/comments/:commentId', restaurantController.updateCommentById);
+/**
+ * @route PUT /:id/comments/:commentId
+ * @description Actualizar un comentario de un restaurante por ID
+ * @access Public
+ * @param {string} id - El ID del restaurante
+ * @param {string} commentId - El ID del comentario
+ */
+router.put("/:id/comments/:commentId", restaurantController.updateCommentById);
 
-// Ruta para agregar comentarios a un restaurante POST
-router.post('/:id/comments', restaurantController.addComment);
+/**
+ * @route POST /:id/comments
+ * @description Agregar un comentario a un restaurante
+ * @access Public
+ * @param {string} id - El ID del restaurante
+ */
+router.post("/:id/comments", restaurantController.addComment);
 
-// Delete 
-router.delete('/:id/comments/:commentId', restaurantController.deleteCommentById);
-
+/**
+ * @route DELETE /:id/comments/:commentId
+ * @description Eliminar un comentario de un restaurante por ID
+ * @access Public
+ * @param {string} id - El ID del restaurante
+ * @param {string} commentId - El ID del comentario
+ */
+router.delete(
+  "/:id/comments/:commentId",
+  restaurantController.deleteCommentById
+);
 module.exports = router;
