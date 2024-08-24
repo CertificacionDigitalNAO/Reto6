@@ -266,11 +266,54 @@ exports.addComment = async (req, res) => {
     res.status(201).json(restaurant.comments);
   } catch (error) {
     console.error("Error al agregar el comentario:", error); // Log del error completo
-    res
-      .status(500)
-      .json({
-        message: "Error al agregar el comentario",
-        error: error.message,
-      });
+    res.status(500).json({
+      message: "Error al agregar el comentario",
+      error: error.message,
+    });
+  }
+};
+
+/**
+ * Eliminar un Comentario de un Restaurante por ID (DELETE).
+ * @async
+ * @function deleteCommentById
+ * @param {Object} req - Objeto de solicitud de Express.
+ * @param {Object} req.params - Objeto que contiene los parámetros de la ruta.
+ * @param {string} req.params.id - El ID del restaurante.
+ * @param {string} req.params.commentId - El ID del comentario.
+ * @param {Object} res - Objeto de respuesta de Express.
+ * @returns {Promise<void>} - Devuelve una promesa que resuelve en una respuesta JSON con el comentario eliminado o un mensaje de error.
+ * @throws {Error} - Devuelve un mensaje de error en caso de fallo.
+ */
+exports.deleteCommentById = async (req, res) => {
+  try {
+    const restaurantId = req.params.id;
+    const commentId = req.params.commentId;
+
+    // Encuentra el restaurante por ID
+    const restaurant = await Restaurant.findById(restaurantId);
+
+    if (!restaurant) {
+      return res.status(404).json({ message: "Restaurante no encontrado" });
+    }
+
+    // Encuentra el comentario por ID y elimínalo usando el método pull
+    const commentToDelete = restaurant.comments.id(commentId);
+    if (!commentToDelete) {
+      return res.status(404).json({ message: "Comentario no encontrado" });
+    }
+
+    restaurant.comments.pull(commentId);
+
+    // Guarda el restaurante actualizado
+    await restaurant.save();
+
+    res.status(200).json({ message: "Comentario eliminado con éxito" });
+  } catch (error) {
+    console.error("Error al eliminar el comentario:", error); // Log del error completo
+    res.status(500).json({
+      message: "Error al eliminar el comentario",
+      error: error.message,
+    });
   }
 };

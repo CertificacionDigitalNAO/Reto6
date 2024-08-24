@@ -54,4 +54,7 @@ router.put('/:id/comments/:commentId', restaurantController.updateCommentById);
 // Ruta para agregar comentarios a un restaurante POST
 router.post('/:id/comments', restaurantController.addComment);
 
+// Delete 
+router.delete('/:id/comments/:commentId', restaurantController.deleteCommentById);
+
 module.exports = router;
