@@ -61,7 +61,7 @@ const RestaurantSchema = new mongoose.Schema({
     {
       date: Date,
       comment: String,
-      _id: mongoose.Schema.Types.ObjectId,
+      _id: { type: mongoose.Schema.Types.ObjectId, auto: true }, // Auto-generación del _id
     },
   ],
 });

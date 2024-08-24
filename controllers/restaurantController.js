@@ -164,4 +164,113 @@ exports.getAllCommentsById = async (req, res) => {
   }
 };
 
+/**
+ * Actualizar un Comentario de un Restaurante por ID (PUT).
+ * @async
+ * @function updateCommentById
+ * @param {Object} req - Objeto de solicitud de Express.
+ * @param {Object} req.params - Objeto que contiene los parámetros de la ruta.
+ * @param {string} req.params.id - El ID del restaurante.
+ * @param {string} req.params.commentId - El ID del comentario.
+ * @param {Object} req.body - Objeto que contiene los datos del comentario actualizado.
+ * @param {Object} res - Objeto de respuesta de Express.
+ * @returns {Promise<void>} - Devuelve una promesa que resuelve en una respuesta JSON con el comentario actualizado o un mensaje de error.
+ * @throws {Error} - Devuelve un mensaje de error en caso de fallo.
+ */
+exports.updateCommentById = async (req, res) => {
+  try {
+    const restaurantId = req.params.id;
+    const commentId = req.params.commentId;
+    const { comment, date } = req.body;
 
+    console.log(`Restaurant ID: ${restaurantId}`);
+    console.log(`Comment ID: ${commentId}`);
+
+    // Validación de entrada
+    if (!comment || !date) {
+      return res
+        .status(400)
+        .json({ message: "Datos incompletos para actualizar el comentario" });
+    }
+
+    // Encuentra el restaurante por ID
+    const restaurant = await Restaurant.findById(restaurantId);
+
+    if (!restaurant) {
+      return res.status(404).json({ message: "Restaurante no encontrado" });
+    }
+
+    console.log(`Restaurant found: ${restaurant}`);
+
+    // Encuentra el comentario por ID y actualiza los campos
+    const commentToUpdate = restaurant.comments.id(commentId);
+    if (!commentToUpdate) {
+      return res.status(404).json({ message: "Comentario no encontrado" });
+    }
+
+    console.log(`Comment found: ${commentToUpdate}`);
+
+    commentToUpdate.comment = comment;
+    commentToUpdate.date = date;
+
+    // Guarda el restaurante actualizado
+    await restaurant.save();
+
+    res.status(200).json(commentToUpdate);
+  } catch (error) {
+    console.error("Error al actualizar el comentario:", error); // Log del error completo
+    res.status(500).json({
+      message: "Error al actualizar el comentario",
+      error: error.message,
+    });
+  }
+};
+
+/**
+ * Agregar un comentario a un restaurante por ID (POST).
+ * @async
+ * @function addComment
+ * @param {Object} req - Objeto de solicitud de Express.
+ * @param {Object} req.params - Objeto que contiene los parámetros de la ruta.
+ * @param {string} req.params.id - El ID del restaurante.
+ * @param {Object} req.body - Objeto que contiene los datos del comentario.
+ * @param {Object} res - Objeto de respuesta de Express.
+ * @returns {Promise<void>} - Devuelve una promesa que resuelve en una respuesta JSON con el comentario agregado o un mensaje de error.
+ * @throws {Error} - Devuelve un mensaje de error en caso de fallo.
+ */
+exports.addComment = async (req, res) => {
+  try {
+    const restaurantId = req.params.id;
+    const { comment, date } = req.body;
+
+    // Validación de entrada
+    if (!comment || !date) {
+      return res
+        .status(400)
+        .json({ message: "Datos incompletos para agregar el comentario" });
+    }
+
+    // Encuentra el restaurante por ID
+    const restaurant = await Restaurant.findById(restaurantId);
+
+    if (!restaurant) {
+      return res.status(404).json({ message: "Restaurante no encontrado" });
+    }
+
+    // Agrega el nuevo comentario al array de comentarios
+    restaurant.comments.push({ comment, date });
+
+    // Guarda el restaurante actualizado
+    await restaurant.save();
+
+    res.status(201).json(restaurant.comments);
+  } catch (error) {
+    console.error("Error al agregar el comentario:", error); // Log del error completo
+    res
+      .status(500)
+      .json({
+        message: "Error al agregar el comentario",
+        error: error.message,
+      });
+  }
+};

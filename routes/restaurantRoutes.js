@@ -48,4 +48,10 @@ router.delete("/:id", restaurantController.deleteRestaurant);
  */
 router.get('/:id/comments', restaurantController.getAllCommentsById);
 
+// Actualizar un Comentario por ID PUT /:id/comments/:commentId
+router.put('/:id/comments/:commentId', restaurantController.updateCommentById);
+
+// Ruta para agregar comentarios a un restaurante POST
+router.post('/:id/comments', restaurantController.addComment);
+
 module.exports = router;
