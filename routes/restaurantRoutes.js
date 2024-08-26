@@ -87,3 +87,12 @@ module.exports = router;
  * @param {string} id - El ID del restaurante
  */
 router.get("/:id/grades", restaurantController.getGradesByRestaurantId);
+
+/**
+ * @route PUT /:id/grades/:gradeId
+ * @description Actualizar una calificación de un restaurante por ID
+ * @access Public
+ * @param {string} id - El ID del restaurante
+ * @param {string} gradeId - El ID de la calificación
+ */
+router.put("/:id/grades/:gradeId", restaurantController.updateGradeById);

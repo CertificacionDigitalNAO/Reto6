@@ -353,3 +353,61 @@ exports.getGradesByRestaurantId = async (req, res) => {
     });
   }
 };
+
+// Endpoint para Actualizar una Calificación de un Restaurante por ID (PUT)
+
+/**
+ * Actualizar una Calificación de un Restaurante por ID (PUT).
+ * @async
+ * @function updateGradeById
+ * @param {Object} req - Objeto de solicitud de Express.
+ * @param {Object} req.params - Objeto que contiene los parámetros de la ruta.
+ * @param {string} req.params.id - El ID del restaurante.
+ * @param {string} req.params.gradeId - El ID de la calificación.
+ * @param {Object} req.body - Objeto que contiene los datos de la calificación actualizada.
+ * @param {number} req.body.score - La puntuación de la calificación.
+ * @param {Date} req.body.date - La fecha de la calificación.
+ * @param {Object} res - Objeto de respuesta de Express.
+ * @returns {Promise<void>} - Devuelve una promesa que resuelve en una respuesta JSON con la calificación actualizada o un mensaje de error.
+ * @throws {Error} - Devuelve un mensaje de error en caso de fallo.
+ */
+exports.updateGradeById = async (req, res) => {
+  try {
+    const restaurantId = req.params.id;
+    const gradeId = req.params.gradeId;
+    const { score, date } = req.body;
+
+    // Validación de entrada
+    if (score === undefined || !date) {
+      return res
+        .status(400)
+        .json({ message: "Datos incompletos para actualizar la calificación" });
+    }
+
+    // Encuentra el restaurante por ID
+    const restaurant = await Restaurant.findById(restaurantId);
+    if (!restaurant) {
+      return res.status(404).json({ message: "Restaurante no encontrado" });
+    }
+
+    // Encuentra la calificación por ID y actualiza los campos
+    const gradeToUpdate = restaurant.grades.id(gradeId);
+    if (!gradeToUpdate) {
+      return res.status(404).json({ message: "Calificación no encontrada" });
+    }
+
+    gradeToUpdate.score = score;
+    gradeToUpdate.date = date;
+
+    // Guarda el restaurante actualizado
+    await restaurant.save();
+
+    res.status(200).json(gradeToUpdate);
+  } catch (error) {
+    console.error("Error al actualizar la calificación:", error); // Log del error completo
+    res.status(500).json({
+      message: "Error al actualizar la calificación",
+      error: error.message,
+    });
+  }
+};
