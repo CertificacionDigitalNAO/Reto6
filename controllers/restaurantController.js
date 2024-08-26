@@ -321,3 +321,35 @@ exports.deleteCommentById = async (req, res) => {
     });
   }
 };
+
+/* Enpoints para Calificar Restaurantes */
+
+/**
+ * Obtener todas las Calificaciones de un Restaurante por ID (GET).
+ * @async
+ * @function getGradesByRestaurantId
+ * @param {Object} req - Objeto de solicitud de Express.
+ * @param {Object} req.params - Objeto que contiene los parámetros de la ruta.
+ * @param {string} req.params.id - El ID del restaurante.
+ * @param {Object} res - Objeto de respuesta de Express.
+ * @returns {Promise<void>} - Devuelve una promesa que resuelve en una respuesta JSON con las calificaciones del restaurante o un mensaje de error.
+ * @throws {Error} - Devuelve un mensaje de error en caso de fallo.
+ */
+exports.getGradesByRestaurantId = async (req, res) => {
+  try {
+    const restaurantId = req.params.id;
+
+    const restaurant = await Restaurant.findById(restaurantId);
+    if (!restaurant) {
+      return res.status(404).json({ message: "Restaurante no encontrado" });
+    }
+
+    res.status(200).json(restaurant.grades);
+  } catch (error) {
+    console.error("Error al obtener las calificaciones:", error);
+    res.status(500).json({
+      message: "Error al obtener las calificaciones",
+      error: error.message,
+    });
+  }
+};

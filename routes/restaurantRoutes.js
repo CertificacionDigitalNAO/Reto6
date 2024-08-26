@@ -38,7 +38,7 @@ router.put("/:id", restaurantController.updateRestaurant);
  */
 router.delete("/:id", restaurantController.deleteRestaurant);
 
-/* Endpoint para Comentarios de Restaurantes */
+/* Endpoints para Comentarios de Restaurantes */
 
 /**
  * @route GET /:id/comments
@@ -77,3 +77,13 @@ router.delete(
   restaurantController.deleteCommentById
 );
 module.exports = router;
+
+/* Endpoints para Calificaciones de Restaurantes */
+
+/**
+ * @route GET /:id/grades
+ * @description Obtener todas las calificaciones de un restaurante por ID
+ * @access Public
+ * @param {string} id - El ID del restaurante
+ */
+router.get("/:id/grades", restaurantController.getGradesByRestaurantId);
