@@ -96,3 +96,12 @@ router.get("/:id/grades", restaurantController.getGradesByRestaurantId);
  * @param {string} gradeId - El ID de la calificación
  */
 router.put("/:id/grades/:gradeId", restaurantController.updateGradeById);
+
+/**
+ * @route DELETE /:id/grades/:gradeId
+ * @description Eliminar una calificación de un restaurante por ID
+ * @access Public
+ * @param {string} id - El ID del restaurante
+ * @param {string} gradeId - El ID de la calificación
+ */
+router.delete("/:id/grades/:gradeId", restaurantController.deleteGradeById);
