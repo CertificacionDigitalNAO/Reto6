@@ -55,6 +55,7 @@ const RestaurantSchema = new mongoose.Schema({
       _id: { type: mongoose.Schema.Types.ObjectId, auto: true }, // Auto-generación del _id
       date: Date,
       score: Number,
+      grade: String,
     },
   ],
   restaurant_id: String,
