@@ -7,13 +7,9 @@ Contiene el **backup** de la base de datos, colecciones e índices en el directo
 2. Los índices de la colección `restaurants` en el archivo `restaurants_indexes.json`.
 
 ## Ciclo ID 2
-Este ciclo se centra en el desarrollo de una CRUD con API REST para manipular la información de los restaurantes. Además, se agregaron dos `enpoint` para agregar comentarios y calificar a los restaurantes. Los `endpoint` son los siguientes:
+Este ciclo se centra en el desarrollo de una CRUD con API REST para manipular la información de los restaurantes. Además, se agregaron dos `enpoint` para agregar comentarios y calificar a los restaurantes. La API se encuentra documentada con Swagger a través del `endpoint` `http://localhost:3000/api-docs/#/`
 
-- `GET /api/restaurants`: Recupera la información de todos los restaurantes.
-- `POST /api/restaurants`: Crea un nuevo restaurante.
-- `PUT /api/restaurants/restaurant_id`: Actualiza la información de un restaurante a través de su ID.
-- `DELETE /api/restaurants/restaurant_id`: Elimina un restaurante a través de su ID.
-
-### Endpoints para Comentarios
-- `GET /api/restaurants/comments`: Obtiene todos los comentarios de los restaurantes. 
-- 
+## Ciclo ID 3
+Este último ciclo comprende las siguientes actividades: 
+1. Desarrollo de nuevas características para la API que permitan la búsqueda de restaurantes, basadas en filtros como: por nombre, por tipo de comida, entre otros.
+2. Ordenar los registros del más cercano al más lejano dependiendo del usuario.
