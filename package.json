@@ -18,7 +18,9 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "mongoose": "^8.5.3",
-    "reto6": "file:"
+    "reto6": "file:",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",

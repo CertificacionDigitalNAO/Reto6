@@ -4,6 +4,7 @@
 
 const express = require("express");
 const connectDB = require("../config/db");
+const swaggerSetup = require('../swagger');
 
 // Conectar a la base de datos
 connectDB();
@@ -17,6 +18,14 @@ const app = express();
  * @memberof module:express
  */
 app.use(express.json());
+
+/**
+ * Configurar Swagger
+ * @name useSwagger
+ * @function
+ * @memberof module:express
+ */
+swaggerSetup(app); // Configura Swagger
 
 /**
  * Definir rutas para la API de restaurantes.
