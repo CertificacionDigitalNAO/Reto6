@@ -504,3 +504,58 @@ exports.addGrade = async (req, res) => {
     });
   }
 };
+
+/* Búsqueda y ordenamiento de Restaurantes con filtros */
+
+/**
+ * Busca y ordena restaurantes según los filtros proporcionados y la proximidad geográfica.
+ *
+ * @async
+ * @function searchAndSortRestaurants
+ * @param {Object} req - Objeto de solicitud HTTP.
+ * @param {Object} req.query - Parámetros de consulta de la solicitud.
+ * @param {string} [req.query.name] - Nombre del restaurante a buscar.
+ * @param {string} [req.query.cuisine] - Tipo de cocina del restaurante a buscar.
+ * @param {string} [req.query.borough] - Distrito del restaurante a buscar.
+ * @param {string} [req.query.lng] - Longitud para la búsqueda por proximidad.
+ * @param {string} [req.query.lat] - Latitud para la búsqueda por proximidad.
+ * @param {Object} res - Objeto de respuesta HTTP.
+ * @returns {Promise<void>} - Devuelve una promesa que se resuelve cuando la respuesta se envía.
+ * @throws {Error} - Lanza un error si ocurre un problema durante la búsqueda.
+ */
+exports.searchAndSortRestaurants = async (req, res) => {
+  try {
+    const { name, cuisine, borough, lng, lat } = req.query;
+
+    // Filtros de búsqueda
+    const filters = {};
+    if (name) filters.name = new RegExp(name, "i"); // Insensible a mayúsculas/minúsculas
+    if (cuisine) filters.cuisine = new RegExp(cuisine, "i");
+    if (borough) filters.borough = new RegExp(borough, "i");
+
+    let restaurants;
+
+    if (lng && lat) {
+      // Si se proporcionan coordenadas, buscar y ordenar por proximidad
+      restaurants = await Restaurant.find({
+        ...filters, // Incluye los filtros de búsqueda
+        "address.coord": {
+          $near: {
+            $geometry: {
+              type: "Point",
+              coordinates: [parseFloat(lng), parseFloat(lat)],
+            },
+            $maxDistance: 5000, // 5km de distancia máxima
+          },
+        },
+      });
+    } else {
+      // Si no se proporcionan coordenadas, solo buscar por filtros
+      restaurants = await Restaurant.find(filters);
+    }
+
+    res.json(restaurants);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

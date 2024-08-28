@@ -795,4 +795,69 @@ router.delete("/:id/grades/:gradeId", restaurantController.deleteGradeById);
  */
 router.post("/:id/grades", restaurantController.addGrade);
 
+/**
+ * @swagger
+ * /restaurants/search:
+ *   get:
+ *     summary: Busca y ordena restaurantes según los filtros proporcionados y la proximidad geográfica.
+ *     tags:
+ *       - Restaurantes
+ *     parameters:
+ *       - in: query
+ *         name: name
+ *         schema:
+ *           type: string
+ *         description: Nombre del restaurante a buscar.
+ *       - in: query
+ *         name: cuisine
+ *         schema:
+ *           type: string
+ *         description: Tipo de cocina del restaurante a buscar.
+ *       - in: query
+ *         name: borough
+ *         schema:
+ *           type: string
+ *         description: Distrito del restaurante a buscar.
+ *       - in: query
+ *         name: lng
+ *         schema:
+ *           type: string
+ *         description: Longitud para la búsqueda por proximidad.
+ *       - in: query
+ *         name: lat
+ *         schema:
+ *           type: string
+ *         description: Latitud para la búsqueda por proximidad.
+ *     responses:
+ *       200:
+ *         description: Lista de restaurantes que coinciden con los filtros y la proximidad.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   name:
+ *                     type: string
+ *                     description: Nombre del restaurante.
+ *                   cuisine:
+ *                     type: string
+ *                     description: Tipo de cocina del restaurante.
+ *                   borough:
+ *                     type: string
+ *                     description: Distrito del restaurante.
+ *                   address:
+ *                     type: object
+ *                     properties:
+ *                       coord:
+ *                         type: array
+ *                         items:
+ *                           type: number
+ *                         description: Coordenadas del restaurante.
+ *       500:
+ *         description: Error interno del servidor.
+ */
+router.get("/search", restaurantController.searchAndSortRestaurants);
+
 module.exports = router;

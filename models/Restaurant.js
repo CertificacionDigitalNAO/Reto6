@@ -48,7 +48,10 @@ const RestaurantSchema = new mongoose.Schema({
     building: String,
     street: String,
     zipcode: String,
-    coord: [Number],
+    coord: {
+      type: [Number],
+      index: "2dsphere" // Definición del índice geoespacial
+    },
   },
   grades: [
     {
